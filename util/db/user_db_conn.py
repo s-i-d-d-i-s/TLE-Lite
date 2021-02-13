@@ -95,29 +95,7 @@ class UserDbConn:
             'title_photo         TEXT'
             ')'
         )
-        # TODO: Make duel tables guild-aware.
-        self.conn.execute('''
-            CREATE TABLE IF NOT EXISTS duelist(
-                "user_id"	INTEGER PRIMARY KEY NOT NULL,
-                "rating"	INTEGER NOT NULL
-            )
-        ''')
-        self.conn.execute('''
-            CREATE TABLE IF NOT EXISTS duel(
-                "id"	INTEGER PRIMARY KEY AUTOINCREMENT,
-                "challenger"	INTEGER NOT NULL,
-                "challengee"	INTEGER NOT NULL,
-                "issue_time"	REAL NOT NULL,
-                "start_time"	REAL,
-                "finish_time"	REAL,
-                "problem_name"	TEXT,
-                "contest_id"	INTEGER,
-                "p_index"	INTEGER,
-                "status"	INTEGER,
-                "winner"	INTEGER,
-                "type"		INTEGER
-            )
-        ''')
+        
         self.conn.execute('''
             CREATE TABLE IF NOT EXISTS "challenge" (
                 "id"	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -150,19 +128,7 @@ class UserDbConn:
                 before TEXT
             )
         ''')
-        self.conn.execute(
-            'CREATE TABLE IF NOT EXISTS starboard ('
-            'guild_id     TEXT PRIMARY KEY,'
-            'channel_id   TEXT'
-            ')'
-        )
-        self.conn.execute(
-            'CREATE TABLE IF NOT EXISTS starboard_message ('
-            'original_msg_id    TEXT PRIMARY KEY,'
-            'starboard_msg_id   TEXT,'
-            'guild_id           TEXT'
-            ')'
-        )
+
         self.conn.execute(
             'CREATE TABLE IF NOT EXISTS rankup ('
             'guild_id     TEXT PRIMARY KEY,'
