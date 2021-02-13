@@ -1,21 +1,21 @@
 # TLE-Lite
 
-A lite version of the very popular bot for Codeforces : TLE
+A lite version of the very popular bot for Codeforces : [TLE](https://github.com/cheran-senthil/TLE)
 
-TLE-Lite is a lightweight-ripoff of TLE
+TLE-Lite is a lightweight-ripoff of [TLE](https://github.com/cheran-senthil/TLE)
 
-It was created because TLE is kindof a pain to setup and host for people who are not very techy and used to inviting bots.
-TLE-Lite is not as cool and orz as TLE, but it's easy to invite and can do most of the job.
+It was created because [TLE](https://github.com/cheran-senthil/TLE) is kindof a pain to setup and host for people who are not very techy and used to inviting bots.
+TLE-Lite is not as cool and orz as [TLE](https://github.com/cheran-senthil/TLE), but it's easy to invite and can do most of the job.
 
 Its currently in beta/testing, so it may act wierd sometimes
 
-Check my Github Repositry to get updates on this project.
+### Star this Github Repositry to get updates on this project.
 
-[TLE-Lite](https://github.com/s-i-d-d-i-s/TLE-Lite)
+* [TLE-Lite](https://github.com/s-i-d-d-i-s/TLE-Lite)
 
-[TLE](https://github.com/cheran-senthil/TLE)
+* [TLE](https://github.com/cheran-senthil/TLE)
 
-[Invite To Your Server](https://discord.com/api/oauth2/authorize?client_id=809995275300110357&permissions=8&scope=bot)
+* [Invite To Your Server](https://discord.com/api/oauth2/authorize?client_id=809995275300110357&permissions=8&scope=bot)
 
 Type ;help to check out it's commands
 
