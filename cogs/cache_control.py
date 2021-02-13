@@ -5,7 +5,7 @@ import traceback
 from discord.ext import commands
 
 from util import codeforces_common as cf_common
-
+import TLEconstants
 
 def timed_command(coro):
     @functools.wraps(coro)
@@ -28,60 +28,82 @@ class CacheControl(commands.Cog):
     @commands.group(brief='Commands to force reload of cache',
                     invoke_without_command=True)
     @commands.has_role('Admin')
+    @commands.has_role('Developer')
     async def cache(self, ctx):
-        await ctx.send_help('cache')
+        if str(ctx.author.id) == TLEconstants.OWNER_ID:
+            await ctx.send_help('cache')
+        else:
+            await ctx.send("Bruh...You don't own this instance of TLE")
 
     @cache.command()
     @commands.has_role('Admin')
+    @commands.has_role('Developer')
     @timed_command
     async def contests(self, ctx):
-        await cf_common.cache2.contest_cache.reload_now()
+        if str(ctx.author.id) == TLEconstants.OWNER_ID:
+            await cf_common.cache2.contest_cache.reload_now()
+        else:
+            await ctx.send("Bruh...You don't own this instance of TLE")
+        
 
     @cache.command()
     @commands.has_role('Admin')
+    @commands.has_role('Developer')
     @timed_command
     async def problems(self, ctx):
-        await cf_common.cache2.problem_cache.reload_now()
+        if str(ctx.author.id) == TLEconstants.OWNER_ID:
+            await cf_common.cache2.problem_cache.reload_now()
+        else:
+            await ctx.send("Bruh...You don't own this instance of TLE")
+        
 
     @cache.command(usage='[missing|all|contest_id]')
     @commands.has_role('Admin')
+    @commands.has_role('Developer')
     @timed_command
     async def ratingchanges(self, ctx, contest_id='missing'):
         """Defaults to 'missing'. Mode 'all' clears existing cached changes.
         Mode 'contest_id' clears existing changes with the given contest id.
         """
-        if contest_id not in ('all', 'missing'):
-            try:
-                contest_id = int(contest_id)
-            except ValueError:
-                return
-        if contest_id == 'all':
-            await ctx.send('This will take a while')
-            count = await cf_common.cache2.rating_changes_cache.fetch_all_contests()
-        elif contest_id == 'missing':
-            await ctx.send('This may take a while')
-            count = await cf_common.cache2.rating_changes_cache.fetch_missing_contests()
+        if str(ctx.author.id) == TLEconstants.OWNER_ID:
+            if contest_id not in ('all', 'missing'):
+                try:
+                    contest_id = int(contest_id)
+                except ValueError:
+                    return
+            if contest_id == 'all':
+                await ctx.send('This will take a while')
+                count = await cf_common.cache2.rating_changes_cache.fetch_all_contests()
+            elif contest_id == 'missing':
+                await ctx.send('This may take a while')
+                count = await cf_common.cache2.rating_changes_cache.fetch_missing_contests()
+            else:
+                count = await cf_common.cache2.rating_changes_cache.fetch_contest(contest_id)
+            await ctx.send(f'Done, fetched {count} changes and recached handle ratings')
         else:
-            count = await cf_common.cache2.rating_changes_cache.fetch_contest(contest_id)
-        await ctx.send(f'Done, fetched {count} changes and recached handle ratings')
+            await ctx.send("Bruh...You don't own this instance of TLE")
 
     @cache.command(usage='contest_id|all')
     @commands.has_role('Admin')
+    @commands.has_role('Developer')
     @timed_command
     async def problemsets(self, ctx, contest_id):
         """Mode 'all' clears all existing cached problems. Mode 'contest_id'
         clears existing problems with the given contest id.
         """
-        if contest_id == 'all':
-            await ctx.send('This will take a while')
-            count = await cf_common.cache2.problemset_cache.update_for_all()
+        if str(ctx.author.id) == TLEconstants.OWNER_ID:
+            if contest_id == 'all':
+                await ctx.send('This will take a while')
+                count = await cf_common.cache2.problemset_cache.update_for_all()
+            else:
+                try:
+                    contest_id = int(contest_id)
+                except ValueError:
+                    return
+                count = await cf_common.cache2.problemset_cache.update_for_contest(contest_id)
+            await ctx.send(f'Done, fetched {count} problems')
         else:
-            try:
-                contest_id = int(contest_id)
-            except ValueError:
-                return
-            count = await cf_common.cache2.problemset_cache.update_for_contest(contest_id)
-        await ctx.send(f'Done, fetched {count} problems')
+            await ctx.send("Bruh...You don't own this instance of TLE")
 
     async def cog_command_error(self, ctx, error):
         if isinstance(error, commands.CommandInvokeError):

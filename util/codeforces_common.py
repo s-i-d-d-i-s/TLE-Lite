@@ -155,12 +155,12 @@ class HandleCountOutOfBoundsError(ResolveHandleError):
 
 class FindMemberFailedError(ResolveHandleError):
     def __init__(self, member):
-        super().__init__(f'Unable to convert `{member}` to a server member')
+        super().__init__(f'You need to provide Codeforces Handle !')
 
 
 class HandleNotRegisteredError(ResolveHandleError):
     def __init__(self, member):
-        super().__init__(f'Codeforces handle for {member.mention} not found in database')
+        super().__init__(f'You need to provide Codeforces Handle !')
 
 
 class HandleIsVjudgeError(ResolveHandleError):

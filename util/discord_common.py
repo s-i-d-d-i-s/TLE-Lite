@@ -5,6 +5,7 @@ import random
 
 import discord
 from discord.ext import commands
+from discord.utils import find
 
 from util import codeforces_api as cf
 from util import db
@@ -100,6 +101,25 @@ def on_ready_event_once(bot):
     """Decorator that uses bot.event to set the given function as the bot's on_ready event handler,
     but does not execute it more than once.
     """
+    @bot.event
+    async def on_guild_join(guild):
+        general = find(lambda x: x.name == 'general',  guild.text_channels)
+        if general and general.permissions_for(guild.me).send_messages:
+            desc = "Hi ! I am [TLE-Lite](https://github.com/s-i-d-d-i-s/TLE-Lite), I am a lightweight-ripoff of [TLE](https://github.com/cheran-senthil/TLE)"
+            desc += "\n\nI was created because my big brother [TLE](https://github.com/cheran-senthil/TLE) is a pain to setup and host lol :rofl:"
+            desc += "\nEven tho im not as cool and orz as him, i'm easy to invite and get most of the job done :wink:"
+            desc += "\n\nI'm currently in beta/testing, so i may act wierd sometimes :frowning: "
+            desc += "\n\nCheck my Github Repositry to get updates on this project."
+            desc += "\n\n[TLE-Lite](https://github.com/s-i-d-d-i-s/TLE-Lite)"
+            desc += "\n\n[TLE](https://github.com/cheran-senthil/TLE)"
+            desc += "\n\n[Invite Me](https://discord.com/api/oauth2/authorize?client_id=809995275300110357&permissions=8&scope=bot)"
+            desc += "\n\nType `;help` to check out my commands"
+            desc += "\n\nIf you invite me, make sure that you give me Admin Role\nand you have roles named on all Codeforces Ranks\ne.g `[Newbie,Pupil,Expert...]`"
+            desc += "\n\nIf you need help, talk to people working on this project [here](https://discord.gg/7vzwAye2kN)"
+            botpic = "https://i.ibb.co/Sx6Jtn2/TLE-Lite-Trans.png"
+            embed = discord.Embed(description=desc, color=discord.Colour(0xffff00))
+            embed.set_thumbnail(url=botpic)
+            await general.send(embed=embed)
     def register_on_ready(func):
         @bot.event
         @once
@@ -119,13 +139,11 @@ async def presence(bot):
                waiter=tasks.Waiter.fixed_delay(5*60))
     async def presence_task(_):
         while True:
-            target = random.choice([
-                member for member in bot.get_all_members()
-                if 'Purgatory' not in {role.name for role in member.roles}
-            ])
-            await bot.change_presence(activity=discord.Game(
-                name=f'{target.display_name} orz'))
-            await asyncio.sleep(10 * 60)
+            cnt = 0
+            for g in bot.guilds:
+                cnt += len(g.members)
+                await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{cnt} members and {len(bot.guilds)} servers !"))
+                await asyncio.sleep(10 * 60)
 
     presence_task.start()
 

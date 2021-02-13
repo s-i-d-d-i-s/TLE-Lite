@@ -48,7 +48,7 @@ def main():
     parser.add_argument('--nodb', action='store_true')
     args = parser.parse_args()
 
-    token = "ODA5OTk1Mjc1MzAwMTEwMzU3.YCdM4g.QxiUxIt9HR9Fp4oGdkJiXMqcRy8"
+    token = "YourBotToken"
     if not token:
         logging.error('Token required')
         return
