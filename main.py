@@ -15,7 +15,7 @@ from matplotlib import pyplot as plt
 import TLEconstants
 from util import codeforces_common as cf_common
 from util import discord_common, font_downloader
-
+import os
 
 def setup():
     # Make required directories.
@@ -48,7 +48,7 @@ def main():
     parser.add_argument('--nodb', action='store_true')
     args = parser.parse_args()
 
-    token = "YourBotToken"
+    token = os.getenv("TLE_LITE_TOKEN")
     if not token:
         logging.error('Token required')
         return
